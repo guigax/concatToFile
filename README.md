@@ -16,7 +16,7 @@ Execute the `go run` command
 
 You can also build and execute the code with:
 
-    go build && concat.exe
+    go build && concatToFile.exe
 
 It accepts command-line arguments, listed by: 
 
