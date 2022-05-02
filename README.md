@@ -55,7 +55,7 @@ Content that will be concatenated after everything.
 
 Short to "after repeat". Content that will be concatenated after every repetition.
 
-    -afterR="', 'John Doe'),"
+    -afterR="', CURRENT_TIMESTAMP),"
 
 ### remove
 
@@ -87,16 +87,16 @@ Using the file `generateFiles/text_created.txt` as the base file, I want to outp
 
 ```sql
 INSERT INTO table01 (column1, column2, column3) VALUES 
-(01, 'line 1', 'John Doe'),
-(01, 'line 2', 'John Doe'),
-(01, 'line 3', 'John Doe'),
-(01, 'line 4', 'John Doe'),
-(01, 'line 5', 'John Doe')
+(01, 'line 1', CURRENT_TIMESTAMP),
+(01, 'line 2', CURRENT_TIMESTAMP),
+(01, 'line 3', CURRENT_TIMESTAMP),
+(01, 'line 4', CURRENT_TIMESTAMP),
+(01, 'line 5', CURRENT_TIMESTAMP)
 ;
 ```
 
 Then the command-line arguments will be passed in this way:
 
-    go run concat.go -path="generateFiles/text_created.txt" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', 'John Doe')," -after=";" -split=5000 -name="table01_20220101" -format="txt" -remove
+    go run concat.go -path="generateFiles/text_created.txt" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', CURRENT_TIMESTAMP)," -after=";" -split=5000 -name="table01_20220101" -format="txt" -remove
 
 The result will be 151 files named `table01_20220101_01.txt`, `table01_20220101_02.txt`, `table01_20220101_03.txt`, etc... Each with 5000 records in them in the same path of the original file.
