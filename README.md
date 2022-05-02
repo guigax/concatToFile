@@ -12,15 +12,18 @@ This project was conceived to made files of a multi line `INSERT INTO`, based on
 
 Execute the `go run` command
 
-    go run ./
+    go run concat.go
 
 You can also build and execute the code with:
 
-    go build && concatToFile.exe
+OS | Command
+--- | --- 
+Windows | `go build concat.go && concat.exe`
+Linux | `go build concat.go && ./concat`
 
 It accepts command-line arguments, listed by: 
 
-    go run ./ --help
+    go run concat.go --help
 
 # Features
 
@@ -56,7 +59,7 @@ Short to "after repeat". Content that will be concatenated after every repetitio
 
 ### remove
 
-If passed, it removes the last character of the resulting file(s) (default `false`).
+If passed, it removes the last character of the resulting file(s) (default `false`). It does not remove the contents of the `-after` flag.
 
     -remove
 
@@ -94,6 +97,6 @@ INSERT INTO table01 (column1, column2, column3) VALUES
 
 Then the command-line arguments will be passed in this way:
 
-    go run ./ -path="generateFiles/text_created.txt" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', 'John Doe')," -after=";" -split=5000 -name="table01_20220101" -format="txt" -remove
+    go run concat.go -path="generateFiles/text_created.txt" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', 'John Doe')," -after=";" -split=5000 -name="table01_20220101" -format="txt" -remove
 
 The result will be 151 files named `table01_20220101_01.txt`, `table01_20220101_02.txt`, `table01_20220101_03.txt`, etc... Each with 5000 records in them in the same path of the original file.
