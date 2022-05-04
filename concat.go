@@ -56,7 +56,7 @@ func readLines(path string) []string {
 // writeLines writes the lines to the given file.
 func writeLines(fileLines []string, parameters parameters, dir string) {
 	totalLineCount := len(fileLines)
-	fmt.Printf("Total Lines: %d", totalLineCount)
+	fmt.Printf("Total Lines: %d\n", totalLineCount)
 
 	// get how many files will be created
 	amountOfFiles := getAmountOfFiles(float64(totalLineCount), float64(parameters.splitAt))
@@ -65,12 +65,14 @@ func writeLines(fileLines []string, parameters parameters, dir string) {
 	// it will generate files based on the split at parameter
 	// foreach section, it will generate a file
 	for i := 1; i <= amountOfFiles; i++ {
-		fmt.Printf("Current file: %d", i)
-		fmt.Printf("Current line: %d", iTotalLines)
+		fmt.Printf("Current file: %d\n", i)
+		fmt.Printf("Current line: %d\n", iTotalLines)
 
 		filepath := dir + "/" + parameters.name + "_" + strconv.Itoa(i) + "." + parameters.format
 		file, err := os.Create(filepath)
-		exit("writeLines", "Unable to create a file named: "+filepath, err)
+		if err != nil {
+			exit("writeLines", "Unable to create a file named: "+filepath, err)
+		}
 
 		defer file.Close()
 
@@ -78,19 +80,19 @@ func writeLines(fileLines []string, parameters parameters, dir string) {
 		fmt.Fprintln(w, parameters.before)
 
 		// creates a bool, avoiding duplicate code
-		var endOfFile bool
+		var endOfFile int
 		if i == amountOfFiles {
 			// if it is the last file (avoiding index out of bounds with "lineCount-1" instead of "(splitAt*i)-1")
-			endOfFile = iTotalLines <= totalLineCount-1
+			endOfFile = totalLineCount - 1
 		} else {
-			endOfFile = iTotalLines <= (parameters.splitAt*i)-1
+			endOfFile = (parameters.splitAt * i) - 1
 		}
 
-		for endOfFile {
+		for iTotalLines <= endOfFile {
 			repeatStr := parameters.beforeR + fileLines[iTotalLines] + parameters.afterR
 
 			// check if it is the last line and remove is true
-			if endOfFile && parameters.remove {
+			if iTotalLines == endOfFile && parameters.remove {
 				// TODO: it would be fancier to remove a character from "w", instead to insert with one less character into it
 				// inserts one less character, because of the "remove" flag
 				fmt.Fprintln(w, repeatStr[:len(repeatStr)-1])
