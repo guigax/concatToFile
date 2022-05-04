@@ -29,7 +29,7 @@ It accepts command-line arguments, listed by:
 
 ### path
 
-Defines a path to the file that will use on the concatenate proccess.
+Defines a path to the file that will use on the concatenate proccess. The resulting file(s) will be put on the same directory as the original file.
 
     -path="generateFiles/text_created.txt"
 
