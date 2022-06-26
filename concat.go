@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"math"
 	"os"
@@ -64,22 +65,32 @@ func exit(method string, msg string, err error) {
 
 // readLines reads a whole file into memory
 // and returns a slice of its lines.
-func readLines(path string) []string {
-	file, err := os.Open(path)
+func openAndReadFile(fileName string) []string {
+	file, err := os.Open(fileName)
 	if err != nil {
-		exit("readLines", "Cannot open file: "+path, err)
+		exit("openAndReadFile", "Cannot open file: "+fileName, err)
 	}
 	defer file.Close()
 
+	lines, err := readFile(file)
+	if err != nil {
+		fmt.Printf("Failed to read file: %s", fileName)
+	}
+
+	return lines
+}
+
+func readFile(reader io.Reader) ([]string, error) {
 	var lines []string
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
 	if scanner.Err() != nil {
-		exit("readLines", "Cannot parse data from file", err)
+		exit("openAndReadFile", "Cannot parse data from file", scanner.Err())
 	}
-	return lines
+
+	return lines, scanner.Err()
 }
 
 // writeLines writes the lines to the given file.
@@ -136,6 +147,6 @@ func writeLines(fileLines []string, params parameters) {
 
 func main() {
 	parameters := parseFlags()
-	fileContent := readLines(parameters.source)
+	fileContent := openAndReadFile(parameters.source)
 	writeLines(fileContent, parameters)
 }
