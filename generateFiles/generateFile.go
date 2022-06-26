@@ -13,7 +13,6 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Println(path)
 	file, err := os.Create(path + "/text_created.txt")
 	if err != nil {
 		log.Fatalf("writeLines: %s", err)
