@@ -4,11 +4,29 @@ A CLI to read, concatenate and write multiple values into files.
 
 The original intent of this project was to make multiple files of a multi line `INSERT INTO`, based on another file content. Feel free to fit it for your usage.
 
-# Requirements
+## Table of Contents
+
+- [concatToFile](#concattofile)
+  * [Requirements](#requirements)
+  * [Run](#run)
+  * [Features](#features)
+    + [source](#source)
+    + [destination](#destination)
+    + [before](#before)
+    + [beforeR](#beforer)
+    + [after](#after)
+    + [afterR](#afterr)
+    + [split](#split)
+    + [name](#name)
+    + [format](#format)
+    + [remove](#remove)
+  * [Usage](#usage)
+
+## Requirements
 
 [Go 1.18+](https://go.dev/dl/)
 
-# Run
+## Run
 
 Execute the `go run` command
 
@@ -25,7 +43,9 @@ It accepts command-line arguments, listed by:
 
     go run concat.go --help
 
-# Features
+## Features
+
+Available flags to use it on the CLI.
 
 ### source
 
@@ -87,7 +107,7 @@ If passed, it removes the last character of the resulting file(s) (default `fals
 
     -remove
 
-# Usage
+## Usage
 
 Using the file `generateFiles/text_created.txt` as the base file, I want to output multiple files on the following format, splitting 5000 lines per resulting file, in a sql file:
 
