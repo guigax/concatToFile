@@ -2,7 +2,7 @@
 
 A CLI to read, concatenate and write multiple values into files.
 
-This project was conceived to made files of a multi line `INSERT INTO`, based on another file with the contents of the SQL.
+The original intent of this project was to make multiple files of a multi line `INSERT INTO`, based on another file content. Feel free to fit it for your usage.
 
 # Requirements
 
