@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -20,45 +19,19 @@ type parameters struct {
 	afterR      string
 	name        string
 	format      string
-	remove      bool
 	splitAt     int
+	remove      bool
 }
 
-func parseFlags() parameters {
-	source := flag.String("source", "", "path of file that will be parsed")
-	destination := flag.String("destination", "./", "path where the file (s) will be generated")
-	splitAt := flag.Int("split", 100000, "at which line it will split the resulted files")
-	before := flag.String("before", "", "a string that will be concatenated before all of the repetitions")
-	beforeR := flag.String("beforeR", "", "a string that will be concatenated before the start of each repetition")
-	after := flag.String("after", "", "a string that will be concatenated after all of the repetitions")
-	afterR := flag.String("afterR", "", "a string that will be concatenated after the end of each repetition")
-	name := flag.String("name", "generatedFile", "resulting file name (without file type)")
-	format := flag.String("format", "txt", "resulting file format")
-	remove := flag.Bool("remove", false, "if passed, it removes the last character of the file before the contents of the \"after\" flag")
-
-	flag.Parse()
-
-	return parameters{
-		source:      *source,
-		destination: *destination,
-		before:      *before,
-		beforeR:     *beforeR,
-		after:       *after,
-		afterR:      *afterR,
-		name:        *name,
-		format:      *format,
-		splitAt:     *splitAt,
-		remove:      *remove,
-	}
-}
-
-func getAmountOfFiles(lineCount int, splitAt int) int {
-	// always round up
-	// math.Ceil needs two float64 args
+/*
+	always round up
+	it uses math.Ceil and it needs two float64 args
+*/
+func getAmountOfFiles(lineCount, splitAt int) int {
 	return int(math.Ceil(float64(lineCount) / float64(splitAt)))
 }
 
-func exit(method string, msg string, err error) {
+func exit(method, msg string, err error) {
 	// handle error
 	log.Fatalf("exit method={%s}, msg={%s}, err={%s}", method, msg, err.Error())
 }
@@ -68,13 +41,13 @@ func exit(method string, msg string, err error) {
 func openAndReadFile(fileName string) []string {
 	file, err := os.Open(fileName)
 	if err != nil {
-		exit("openAndReadFile", "Cannot open file: "+fileName, err)
+		exit("openAndReadFile", "cannot open file: "+fileName, err)
 	}
 	defer file.Close()
 
 	lines, err := readFile(file)
 	if err != nil {
-		fmt.Printf("Failed to read file: %s", fileName)
+		fmt.Printf("cailed to read file: %s", fileName)
 	}
 
 	return lines
@@ -87,7 +60,7 @@ func readFile(reader io.Reader) ([]string, error) {
 		lines = append(lines, scanner.Text())
 	}
 	if scanner.Err() != nil {
-		exit("openAndReadFile", "Cannot parse data from file", scanner.Err())
+		exit("openAndReadFile", "cannot parse data from file", scanner.Err())
 	}
 
 	return lines, scanner.Err()
@@ -110,7 +83,7 @@ func writeLines(fileLines []string, params parameters) {
 		filepath := params.destination + "/" + params.name + "_" + strconv.Itoa(iFile) + "." + params.format
 		file, err := os.Create(filepath)
 		if err != nil {
-			exit("writeLines", "Unable to create a file named: "+filepath, err)
+			exit("writeLines", "unable to create a file named: "+filepath, err)
 		}
 
 		defer file.Close()

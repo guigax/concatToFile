@@ -12,18 +12,18 @@ This project was conceived to made files of a multi line `INSERT INTO`, based on
 
 Execute the `go run` command
 
-    go run concat.go
+    go run .
 
 You can also build and execute the code with:
 
 OS | Command
 --- | --- 
-Windows | `go build concat.go && concat.exe`
-Linux | `go build concat.go && ./concat`
+Windows | `go build . && concatToFile.exe`
+Linux | `go build . && ./concatToFile`
 
 It accepts command-line arguments, listed by: 
 
-    go run concat.go --help
+    go run . --help
 
 # Features
 
@@ -103,6 +103,6 @@ INSERT INTO table01 (column1, column2, column3) VALUES
 
 Then the command-line arguments will be like this:
 
-    go run concat.go -source="generateFiles/text_created.txt" -destination="generateFiles" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', CURRENT_TIMESTAMP)," -after=";" -split=5000 -name="table01_20220101" -format="sql" -remove
+    go run . -source="generateFiles/text_created.txt" -destination="generateFiles" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', CURRENT_TIMESTAMP)," -after=";" -split=5000 -name="table01_20220101" -format="sql" -remove
 
 The result will be 151 files named `table01_20220101_01.sql`, `table01_20220101_02.sql`, `table01_20220101_03.sql`, etc... Each with 5000 records in them at the destination.
