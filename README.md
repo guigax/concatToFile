@@ -8,7 +8,7 @@ The original intent of this project was to make multiple files of a multi line `
 
 - [concatToFile](#concattofile)
   * [Requirements](#requirements)
-  * [Run](#run)
+  * [Build](#build)
   * [Features](#features)
     + [source](#source)
     + [destination](#destination)
@@ -26,22 +26,15 @@ The original intent of this project was to make multiple files of a multi line `
 
 [Go 1.18+](https://go.dev/dl/)
 
-## Run
+## Build
 
-Execute the `go run` command
+Execute the `go build` command
 
-    go run concat.go
-
-You can also build and execute the code with:
-
-OS | Command
---- | --- 
-Windows | `go build concat.go && concat.exe`
-Linux | `go build concat.go && ./concat`
+    go build
 
 It accepts command-line arguments, listed by: 
 
-    go run concat.go --help
+    concatToFile --help
 
 ## Features
 
@@ -103,7 +96,7 @@ Resulting file format (default `txt`).
 
 ### remove
 
-If passed, it removes the last character of the resulting file(s) (default `false`). It does not remove the contents of the `-after` flag.
+If used, it removes the last character of the resulting file(s) (default `false`). It does not remove the contents of the `-after` flag.
 
     -remove
 
@@ -123,6 +116,8 @@ INSERT INTO table01 (column1, column2, column3) VALUES
 
 Then the command-line arguments will be like this:
 
-    go run concat.go -source="generateFiles/text_created.txt" -destination="generateFiles" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', CURRENT_TIMESTAMP)," -after=";" -split=5000 -name="table01_20220101" -format="sql" -remove
+```bash
+concatToFile -source="generateFiles/text_created.txt" -destination="generateFiles" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', CURRENT_TIMESTAMP)," -after=";" -split=5000 -name="table01_20220101" -format="sql" -remove
+```
 
 The result will be 151 files named `table01_20220101_01.sql`, `table01_20220101_02.sql`, `table01_20220101_03.sql`, etc... Each with 5000 records in them at the destination.
