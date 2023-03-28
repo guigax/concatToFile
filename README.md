@@ -120,4 +120,10 @@ Then the command-line arguments will be like this:
 concatToFile -source="generateFiles/text_created.txt" -destination="generateFiles" -before="INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR="(01, '" -afterR="', CURRENT_TIMESTAMP)," -after=";" -split=5000 -name="table01_20220101" -format="sql" -remove
 ```
 
+Or in the UNIX way of using flags:
+
+```bash
+concatToFile -source .\generateFiles\text_created.txt -destination .\generateFiles\ -before "INSERT INTO table01 (column1, column2, column3) VALUES " -beforeR "(01, '" -afterR "', CURRENT_TIMESTAMP)," -after ";" -split 5000 -name table01_20220101 -format sql -remove
+```
+
 The result will be 151 files named `table01_20220101_01.sql`, `table01_20220101_02.sql`, `table01_20220101_03.sql`, etc... Each with 5000 records in them at the destination.
